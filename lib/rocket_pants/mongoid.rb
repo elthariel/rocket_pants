@@ -6,12 +6,10 @@ module RocketPants
 
     included do
       map_error! Mongoid::Errors::DocumentNotFound, RocketPants::NotFound
-      # map_error! ActiveRecord::RecordNotFound, RocketPants::NotFound
-      # map_error! ActiveRecord::RecordNotUnique, RocketPants::Conflict
-      # map_error!(ActiveRecord::RecordNotSaved) { RocketPants::InvalidResource.new nil }
-      # map_error! ActiveRecord::RecordInvalid do |exception|
-      #   RocketPants::InvalidResource.new exception.record.errors
-      # end
+      map_error! Mongoid::Errors::Validations do |exception|
+        RocketPants::InvalidResource.new exception.summary
+      end
+      # Extend me if you can :)
     end
 
     ActiveSupport.on_load :mongoid do
