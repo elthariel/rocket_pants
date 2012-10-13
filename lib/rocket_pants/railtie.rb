@@ -46,6 +46,13 @@ module RocketPants
       end
     end
 
+    initializer "rocket_pants.setup_mongoid" do
+      if defined?(Mongoid)
+        require 'rocket_pants/mongoid'
+      end
+    end
+
+
     rake_tasks do
       load "rocket_pants/tasks/rocket_pants.rake"
     end
